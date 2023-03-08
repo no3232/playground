@@ -1,9 +1,9 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 const localStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
     const savedValue = localStorage.getItem(key)
     if (savedValue != null) {
-      setSelf(savedValue);
+      setSelf(JSON.parse(savedValue));
     }
   
     onSet((newValue: any, _: any, isReset: any) => {
@@ -30,10 +30,10 @@ const localStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
 
 const accessToken = atom({
     key: 'accessToken',
-    default: '',
+    default: JSON.parse(localStorage.getItem('accessToken') || ""),
     effects: [
-        // localStorageEffect('accessToken'),
-        sessionStorageEffect('accessToken')
+        localStorageEffect('accessToken'),
+        // sessionStorageEffect('accessToken')
     ]
 })
 

@@ -32,7 +32,6 @@ const Welcome = () => {
   };
 
   const onChecking = () => {
-    console.log(123);
     api.get("accounts/goto401/").then((res) => console.log(res));
   };
 

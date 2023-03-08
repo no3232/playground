@@ -213,8 +213,7 @@ from pprint import pprint
 
 @api_view(['GET'])
 def goto401(request):
-    print(request.META.get("HTTP_AUTHORIZATION"))
-    pprint(request.META)
+    pprint(request.META.get("HTTP_AUTHORIZATION"))
     if request.META.get("HTTP_AUTHORIZATION") == "Bearer thisisnewaccess":
         return Response(status=status.HTTP_202_ACCEPTED)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
