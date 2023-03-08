@@ -1,20 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { useMutation } from "react-query";
-import api from "../api/axiosApi";
+import { useMutation } from "@tanstack/react-query";
+// import api from "../api/axiosApi";
+import { useAxios } from "../api/useAxios";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+
+  const [recoilAccessToken, setRecoilAccessToken, api] = useAxios()
+
   const { mutate, isLoading, isError } = useMutation(
     (credentials: { email: String; password: String }) =>
-      api({
-        url: "accounts/testlogin/",
-        method: "post",
-        data: credentials,
-      }).then((res) => {
-        return res.data
+      api.post("accounts/testlogin/", credentials).then((res) => {
+        setRecoilAccessToken(res.data.access_token);
+        return res.data;
       })
   );
 

@@ -1,9 +1,15 @@
 import { useEffect } from "react";
-import api from "../api/axiosApi";
+// import api from "../api/axiosApi";
 import { cookie } from "../api/axiosApi";
+import { accessToken } from "../recoil/user";
+import { useRecoilState } from "recoil"
+import { useAxios } from "../api/useAxios";
 
 const { naver } = window as any;
 const Welcome = () => {
+  const [recoilAccessToken, setRecoilAccessToken, api] = useAxios()
+
+
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: "FL_dHs6b8BOH36DPExe3",
@@ -21,14 +27,20 @@ const Welcome = () => {
   const onClick = () => {
     api.get("accounts/testing/").then((res) => {
       console.log(res.data);
-      cookie.set("accessToken", res.data.access_token, { path: "/" })
+      setRecoilAccessToken(res.data.access_token)
     });
   };
 
   const onChecking = () => {
     console.log(123);
-    api.get("accounts/refresh/").then((res) => console.log(res));
+    api.get("accounts/goto401/").then((res) => console.log(res));
   };
+
+  // const [recoilAccessToken, setRecoilAccessToken] = useRecoilState(accessToken);
+
+  useEffect(() => {
+    console.log(recoilAccessToken)
+  }, [])
 
   return (
     <>

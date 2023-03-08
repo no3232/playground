@@ -6,8 +6,8 @@ import {
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { request, gql } from "graphql-request";
 
 type Post = {
@@ -64,7 +64,7 @@ function GraphQlPage() {
 }
 
 function usePosts() {
-  return useQuery<PostInPosts[], Error>("posts", async () => {
+  return useQuery<PostInPosts[], Error>(["posts"], async () => {
     const {posts: { data },} = await request<PostsResponse>(
       endpoint,
       gql`

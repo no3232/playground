@@ -1,11 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-
 const NaverCallBackPage = () => {
   const location = useLocation();
   const [token, setToken] = useState<String>("");
-
 
   const getNaverToken = () => {
     if (!location.hash) return;
@@ -13,13 +11,9 @@ const NaverCallBackPage = () => {
     setToken(token);
   };
 
-  
-
   useEffect(() => {
     getNaverToken();
   }, []);
-
-  
 
   return (
     <>
