@@ -7,7 +7,7 @@ import { useAxios } from "../api/useAxios";
 
 const { naver } = window as any;
 const Welcome = () => {
-  const [recoilAccessToken, setRecoilAccessToken, api] = useAxios()
+  const api = useAxios()
 
 
   const initializeNaverLogin = () => {
@@ -26,20 +26,13 @@ const Welcome = () => {
 
   const onClick = () => {
     api.get("accounts/testing/").then((res) => {
-      console.log(res.data);
-      setRecoilAccessToken(res.data.access_token)
+      console.log(res.data)
     });
   };
 
   const onChecking = () => {
     api.get("accounts/goto401/").then((res) => console.log(res));
   };
-
-  // const [recoilAccessToken, setRecoilAccessToken] = useRecoilState(accessToken);
-
-  useEffect(() => {
-    console.log(recoilAccessToken)
-  }, [])
 
   return (
     <>

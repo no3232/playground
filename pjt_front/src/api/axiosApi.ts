@@ -1,7 +1,5 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import { useRecoilState, useSetRecoilState } from "recoil"
-import { accessState } from "../recoil/user";
 
 const cookie = new Cookies();
 
@@ -115,49 +113,49 @@ const api = axios.create({
 
 // 로컬스토리지
 // inercrptors: then 또는 catch로 처리되기 전에 요청과 응답을 가로채서 사용
-api.interceptors.request.use(function (config) {
-  const access = localStorage.getItem('accessToken');
-  // 유저가 없을 시 토큰 null처리
-  // refreshToken은 httponly를 사용할 것 같으니 제외
-  if (!access) {
-    config.headers["Authorization"] = null;
-    // config.headers["refreshToken"] = null;
-    return config;
-  }
-  config.headers["Authorization"] = `Bearer ${access}`;
-  // config.headers["refreshToken"] = refreshToken;
-  return config;
-});
+// api.interceptors.request.use(function (config) {
+//   const access = localStorage.getItem('accessToken');
+//   // 유저가 없을 시 토큰 null처리
+//   // refreshToken은 httponly를 사용할 것 같으니 제외
+//   if (!access) {
+//     config.headers["Authorization"] = null;
+//     // config.headers["refreshToken"] = null;
+//     return config;
+//   }
+//   config.headers["Authorization"] = `Bearer ${access}`;
+//   // config.headers["refreshToken"] = refreshToken;
+//   return config;
+// });
 
-// 401시에 처리
-// 리스폰스 받을 때 401이 발생한다면
+// // 401시에 처리
+// // 리스폰스 받을 때 401이 발생한다면
 
-api.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  async function (error) {
-    if (error.response && error.response.status === 401) {
-      try {
-        const originalRequest = error.config;
-        const data = await api.get("accounts/testrefresh/");
-        if (data) {
-          const accessToken = data.data.access_token;
-          localStorage.removeItem("accessToken");
-          localStorage.setItem("accessToken", accessToken);
-          originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-          return await api.request(originalRequest);
-        }
-      } catch (error) {
-        localStorage.removeItem("accessToken");
-        console.log(error);
+// api.interceptors.response.use(
+//   function (response) {
+//     return response;
+//   },
+//   async function (error) {
+//     if (error.response && error.response.status === 401) {
+//       try {
+//         const originalRequest = error.config;
+//         const data = await api.get("accounts/testrefresh/");
+//         if (data) {
+//           const accessToken = data.data.access_token;
+//           localStorage.removeItem("accessToken");
+//           localStorage.setItem("accessToken", accessToken);
+//           originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+//           return await api.request(originalRequest);
+//         }
+//       } catch (error) {
+//         localStorage.removeItem("accessToken");
+//         console.log(error);
 
-        // 로그아웃 후에 메인페이지로 이동
-      }
-      return Promise.reject(error);
-    }
-    return Promise.reject(error);
-  }
-);
+//         // 로그아웃 후에 메인페이지로 이동
+//       }
+//       return Promise.reject(error);
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
-export default api;
+// export default api;

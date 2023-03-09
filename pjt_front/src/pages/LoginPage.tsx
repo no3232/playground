@@ -9,12 +9,12 @@ function LoginPage() {
   const [password, setPassword] = useState("");
 
 
-  const [recoilAccessToken, setRecoilAccessToken, api] = useAxios()
+  const api = useAxios()
 
   const { mutate, isLoading, isError } = useMutation(
     (credentials: { email: String; password: String }) =>
       api.post("accounts/testlogin/", credentials).then((res) => {
-        setRecoilAccessToken(res.data.access_token);
+        // setRecoilAccessToken(res.data.access_token);
         return res.data;
       })
   );

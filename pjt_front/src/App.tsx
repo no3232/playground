@@ -8,6 +8,7 @@ import NaverCallBackPage from "./pages/NaverCallBackPage";
 import NavBar from "./components/NavBar";
 import Welcome from "./pages/WelcomePage";
 import LoginPage from "./pages/LoginPage";
+import RealLogin from "./pages/RealLoginPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ function App() {
           <Route path="/NaverCallBackPage" element={<NaverCallBackPage />} />
           <Route path="/GraphQLPage" element={<GraphQLPage />} />
           <Route path="/Login" element={<LoginPage />} />
+          <Route path="/RealLogin" element={<RealLogin />} />
         </Routes>
       </Router>
     </div>
